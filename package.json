@@ -1,6 +1,6 @@
 {
   "name": "npak-archiver",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Кроссплатформенный бинарный архиватор формата .npak",
   "main": "api.js",
   "bin": {
