@@ -1,0 +1,31 @@
+{
+  "name": "npak-archiver",
+  "version": "1.0.0",
+  "description": "Кроссплатформенный бинарный архиватор формата .npak",
+  "main": "api.js",
+  "bin": {
+    "npak": "./index.js"
+  },
+  "files": [
+    "index.js",
+    "api.js",
+    "pack.js",
+    "unpack.js",
+    "codes.js",
+    "emoji_codes.js",
+    "cjk.js",
+    "errors.js",
+    "npak-icon.png",
+    "README.md"
+  ],
+  "dependencies": {
+    "chalk-palette": "*"
+  },
+  "keywords": [
+    "archiver",
+    "npak",
+    "cli",
+    "compression"
+  ],
+  "license": "MIT"
+}
