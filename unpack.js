@@ -3,9 +3,10 @@ const path = require("path");
 const crypto = require("crypto");
 const rawPalette = require("chalk-palette");
 const chalk_palette = rawPalette.default || rawPalette;
-const { REV_NIBBLE_MAP, NUM_TO_CHAR } = require(
+const { REV_NIBBLE_MAP, codeToChar } = require(
   path.join(__dirname, "codes.js"),
 );
+
 const { handleHumanError } = require(path.join(__dirname, "errors.js"));
 
 function unpackArchive(archivePath, targetFolder) {
@@ -124,7 +125,7 @@ function unpackArchive(archivePath, targetFolder) {
         mode = null;
       } else if (token === "SEP") {
         const num = Number(digitBuffer);
-        const char = NUM_TO_CHAR[num];
+        const char = codeToChar(num);
         if (mode === "DIR" || mode === "FILE_PATH") {
           currentPath += char;
         } else if (mode === "FILE_DATA") {

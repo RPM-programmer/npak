@@ -4,10 +4,12 @@ const { execFileSync } = require("child_process");
 const { packTargets } = require(path.join(__dirname, "pack.js"));
 const { unpackArchive } = require(path.join(__dirname, "unpack.js"));
 const { handleHumanError } = require(path.join(__dirname, "errors.js"));
+
 const rawArgs = process.argv.slice(2);
 const args = [];
 let format = "npak";
 let formatExplicitlySet = false;
+
 for (let i = 0; i < rawArgs.length; i++) {
   if ((rawArgs[i] === "--format" || rawArgs[i] === "-f") && rawArgs[i + 1]) {
     format = rawArgs[i + 1].toLowerCase().replace(".", "");
@@ -17,7 +19,9 @@ for (let i = 0; i < rawArgs.length; i++) {
     args.push(rawArgs[i]);
   }
 }
-const command = args;
+
+const command = args[0];
+
 function delegateToZip(action, sources, target) {
   try {
     const isWin = process.platform === "win32";
@@ -68,18 +72,18 @@ function delegateToZip(action, sources, target) {
     );
   }
 }
-if ((command === "pack" || command === "p") && args && args) {
-  const source = args;
-  const target = args;
+if ((command === "pack" || command === "p") && args[1] && args[2]) {
+  const source = args[1];
+  const target = args[2];
 
   if (format === "zip" || (!formatExplicitlySet && target.endsWith(".zip"))) {
     delegateToZip("pack", source, target);
   } else {
     packTargets(source, target);
   }
-} else if ((command === "unpack" || command === "u") && args && args) {
-  const archive = args;
-  const targetDir = args;
+} else if ((command === "unpack" || command === "u") && args[1] && args[2]) {
+  const archive = args[1];
+  const targetDir = args[2];
 
   if (format === "zip" || (!formatExplicitlySet && archive.endsWith(".zip"))) {
     delegateToZip("unpack", archive, targetDir);
@@ -88,7 +92,7 @@ if ((command === "pack" || command === "p") && args && args) {
   }
 } else if (command === "pack-auto" && args.length > 1) {
   const targets = args.slice(1).map((p) => path.resolve(p));
-  const firstItem = targets;
+  const firstItem = targets[0];
   const parentDir = path.dirname(firstItem);
   const baseName =
     targets.length === 1 ? path.parse(firstItem).name : "archive";
@@ -100,7 +104,10 @@ if ((command === "pack" || command === "p") && args && args) {
     const outArchive = path.join(parentDir, `${baseName}.npak`);
     packTargets(targets, outArchive);
   }
-} else if (command && (command.endsWith(".npak") || command.endsWith(".zip"))) {
+} else if (
+  typeof command === "string" &&
+  (command.endsWith(".npak") || command.endsWith(".zip"))
+) {
   const archivePath = path.resolve(command);
   const ext = path.extname(archivePath);
   const folderName = path.basename(archivePath, ext);

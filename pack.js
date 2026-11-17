@@ -3,7 +3,7 @@ const path = require("path");
 const crypto = require("crypto");
 const rawPalette = require("chalk-palette");
 const chalk_palette = rawPalette.default || rawPalette;
-const { NIBBLE_MAP, CHAR_TO_NUM } = require(path.join(__dirname, "codes.js"));
+const { NIBBLE_MAP, charToCode } = require(path.join(__dirname, "codes.js"));
 const { handleHumanError } = require(path.join(__dirname, "errors.js"));
 
 class DiskBitWriter {
@@ -42,20 +42,11 @@ class DiskBitWriter {
 
   writeString(str) {
     for (const char of str) {
-      const code = CHAR_TO_NUM[char];
-      if (code !== undefined) {
-        const numStr = String(code);
-        for (let i = 0; i < numStr.length; i++) {
-          this.writeNibble(NIBBLE_MAP[numStr[i]]);
-        }
-        this.writeNibble(NIBBLE_MAP["SEP"]);
-      } else {
-        const fallback = String(CHAR_TO_NUM["?"]);
-        for (let i = 0; i < fallback.length; i++) {
-          this.writeNibble(NIBBLE_MAP[fallback[i]]);
-        }
-        this.writeNibble(NIBBLE_MAP["SEP"]);
+      const numStr = String(charToCode(char));
+      for (let i = 0; i < numStr.length; i++) {
+        this.writeNibble(NIBBLE_MAP[numStr[i]]);
       }
+      this.writeNibble(NIBBLE_MAP["SEP"]);
     }
   }
 
