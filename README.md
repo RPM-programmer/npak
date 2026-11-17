@@ -24,7 +24,7 @@ npm install -g npak
 ### Установка из исходников (с настройкой иконки и двойного клика в Linux)
 
 ```bash
-git clone https://github.com
+git clone https://github.com/RPM-programmer/npak.git
 cd npak
 sudo node setup.js
 ```
