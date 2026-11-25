@@ -1,5 +1,7 @@
 const path = require("path");
 const TIER_3_POPULAR_EMOJI = require(path.join(__dirname, "emoji_codes.js"));
+const TIER_2_COMMON_SYMBOLS = require(path.join(__dirname, "symbols.js"));
+const TIER_1_ULTRA_COMMON = require(path.join(__dirname, "common.js"));
 const { getCjkChars } = require(path.join(__dirname, "cjk.js"));
 const NIBBLE_MAP = {
   0: 0b0000,
@@ -22,19 +24,7 @@ const NIBBLE_MAP = {
 const REV_NIBBLE_MAP = Object.fromEntries(
   Object.entries(NIBBLE_MAP).map(([k, v]) => [v, k]),
 );
-const TIER_1_ULTRA_COMMON =
-  " \n\r\t" +
-  "оеаинтсрвлкмдпуяыьгзбчйхжшюцщэфъё" +
-  "etaoinshrdlcumwfgypbvkjxqz" +
-  ".,!?-_:;()[]{}\"'/\\+=*<>@#$%^&|~`" +
-  "0123456789" +
-  "ОЕАИНТСРВЛКМДПУЯЫЬГЗБЧЙХЖШЮЦЩЭФЪЁ" +
-  "ETAOINSHRDLCUMWFGYPBVKJXQZ";
-const TIER_2_COMMON_SYMBOLS =
-  "«»—–…№₽$€£¥©®™°±×÷≈≠≤≥∞√∑∏∫∂∆πµΩ" +
-  "→←↑↓↔⇒⇔•·▪▫●○■□▲△▼▽◆◇★☆✓✔✕✖✗✘" +
-  "ўЎіІїЇєЄґҐ" +
-  "äöüßÄÖÜéèêëàâîïôùûçÉÈÊËÀÂÎÏÔÙÛÇáíóúñÁÍÓÚÑ";
+
 const CHAR_TO_NUM = new Map();
 const NUM_TO_CHAR = [];
 function registerChar(char) {
